@@ -5,13 +5,14 @@ import Trendings from './Trendings.js';
 
 class App extends Component {
   render() {
-	  const rev = "12";		//	Revision version
+	  const rev = "14";		//	Revision version
 	  console.log("App.render(" + rev + ")");	//	Trace progress
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
+		  <h3>Revision {rev}</h3>
         </header>
 		
 		<Trendings giphyID={this.props.giphyID} giphyLimit={this.props.giphyLimit} />
