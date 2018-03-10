@@ -5,8 +5,8 @@ import Trendings from './Trendings.js';
 
 class App extends Component {
   render() {
-	  const rev = "6";
-	  console.log("App.render(" + rev + ")");
+	  const rev = "12";		//	Revision version
+	  console.log("App.render(" + rev + ")");	//	Trace progress
     return (
       <div className="App">
         <header className="App-header">
@@ -14,7 +14,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
 		
-		<Trendings giphyID={this.props.giphyID} />
+		<Trendings giphyID={this.props.giphyID} giphyLimit={this.props.giphyLimit} />
 		
 		
       </div>
