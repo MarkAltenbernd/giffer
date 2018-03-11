@@ -12,4 +12,5 @@ const giphyLimit = 16;		//	Initially for 4x4 grid
 
 const element = <App giphyID={giphyID} giphyLimit={giphyLimit} />
 ReactDOM.render(element, document.getElementById('root'));
+
 registerServiceWorker();
