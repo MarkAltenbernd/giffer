@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-	  const rev = "18";		//	Revision version
+	  const rev = "19";		//	Revision version
 	  console.log("App.render(" + rev + ")");	//	Trace progress
     return (
 		<div className="App">

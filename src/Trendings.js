@@ -30,9 +30,20 @@ class Trendings extends Component {
 					trendObj.image = response.data[i].images.fixed_height_still;
 					trenders.push(trendObj); 
 				}
-				//	Use the objects create <li> tags and put in array to be returned
+				//	Use the objects to create a bundle of tags and 
+				//	put them into an array to be returned
 				trendItems = trenders.map((tObj) => 
-					<li key={tObj.id}>{tObj.title}</li>);
+					<div key={tObj.id}>
+						<hr />
+						<li key={tObj.id}>
+							<h4>{tObj.title}</h4>
+							<img className="gifImage" 
+									src={tObj.image.gif_url}
+									alt={tObj.title}
+							/>							
+						</li>				
+					</div>
+				);
 				this.setState({trendItems: trendItems});
 			})
 			.catch((err) => {
