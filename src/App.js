@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-	  const rev = "19";		//	Revision version
+	  const rev = "20";		//	Revision version - NOT mapped to git commits
 	  console.log("App.render(" + rev + ")");	//	Trace progress
     return (
 		<div className="App">

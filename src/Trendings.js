@@ -7,9 +7,10 @@ class Trendings extends Component {
 			 giphyID: props.giphyID
 			,giphyLimit: props.giphyLimit
 		};
+		this.handleClick = this.handleClick.bind(this);
 	}
-	componentDidMount() {
-		
+	
+	componentDidMount() {	
 		let giphyClient = require('giphy-js-sdk-core');
 		let client = giphyClient(this.state.giphyID);
 		
@@ -33,7 +34,7 @@ class Trendings extends Component {
 				//	Use the objects to create a bundle of tags and 
 				//	put them into an array to be returned
 				trendItems = trenders.map((tObj) => 
-					<div key={tObj.id}>
+					<div key={tObj.id} onClick={this.handleClick}>
 						<hr />
 						<li key={tObj.id}>
 							<h4>{tObj.title}</h4>
@@ -50,6 +51,11 @@ class Trendings extends Component {
 				console.log("Trendings Promise failed:\n" + err);
 			})
 	}
+	
+	handleClick(evnt) {
+		console.log("\thandleClick(evnt)");
+	}
+	
 	render() {
 		return (
 			<ul>{this.state.trendItems}</ul>

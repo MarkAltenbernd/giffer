@@ -11,7 +11,7 @@ const giphyID = "Gb1KY3Lqu93pXZoqaAAEGxWjUd0Tos8A";
 //	Number of GIFs to retrieve in one call
 const giphyLimit = 16;		//	Initially for 4x4 grid
 
-const element = <App giphyID={giphyID} giphyLimit={giphyLimit} />;
+const element = <App />;
 ReactDOM.render(
 	element, 
 	document.getElementById('root')
