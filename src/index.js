@@ -9,7 +9,7 @@ import registerServiceWorker from './registerServiceWorker';
 const giphyID = "Gb1KY3Lqu93pXZoqaAAEGxWjUd0Tos8A";
 
 //	Number of GIFs to retrieve in one call
-const giphyLimit = 16;		//	Initially for 4x4 grid
+const giphyLimit = 16;
 
 const element = <App />;
 ReactDOM.render(
@@ -17,10 +17,10 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
-const list = <Trendings giphyID={giphyID} giphyLimit={giphyLimit} />;
+const giffList = <Trendings giphyID={giphyID} giphyLimit={giphyLimit} />;
 ReactDOM.render(
-	list, 
-	document.getElementById('list')
+	giffList, 
+	document.getElementById('giffList')
 );
 
 registerServiceWorker();
