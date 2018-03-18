@@ -15,11 +15,9 @@ class Trendings extends Component {
 		this.gotoPrevious = this.gotoPrevious.bind(this);
 		this.gotoNext = this.gotoNext.bind(this);
 		this.closeLightbox = this.closeLightbox.bind(this);
-		this.updateLightbox = this.updateLightbox.bind(this);
 	}
 	
 	componentDidMount() {	
-		console.log("componentDidMount");
 		let giphyClient = require('giphy-js-sdk-core');
 		let client = giphyClient(this.state.giphyID);
 		
@@ -45,60 +43,48 @@ class Trendings extends Component {
 					let urlObj = {src: urlStr};
 					urlObjs.push(urlObj);
 				}
-				console.log("pre-setState(trendObjs):");
 				this.setState({trendObjs: trendObjs});
-				console.log("pre-setState(urlObjs):");
 				this.setState({urlObjs: urlObjs});
-				console.log("pre-updateLightbox():");
-				this.updateLightbox();
 			})
 			.catch((err) => {
 				console.log("Trendings.componentDidMount() failed:\n" + err);
 			})
 	}	//	componentDidMount()
-	updateLightbox() {
-		console.log("updateLightbox");
-		const lightbox = <Lightbox  
-			images={this.state.urlObjs}
-			isOpen={this.state.lightboxIsOpen} 
-			currentImage={this.state.currentImage}
-			onClickPrev={this.gotoPrevious} 
-			onClickNext={this.gotoNext} 
-			onClickImage={this.handleClick}
-			onClose={this.closeLightbox}
-			preventScroll = {this.state.preventScroll}
-		/>;
-		this.setState({lightbox: lightbox});		
-	}
 	handleClick(evnt) {
 		console.log("handleClick");
 		console.log("\thandleClick(evnt) for id=" + evnt.currentTarget.id);
-		this.updateLightbox();
 	}
 	gotoNext(evnt) {
-		console.log("gotoNext");
 		if (this.state.currentImage >= this.state.giphyLimit - 1) {
 			return;
 		}
 		this.setState({currentImage: this.state.currentImage + 1});
-		this.updateLightbox();
 	}
 	gotoPrevious(evnt) {
-		console.log("gotoPrevious");
 		if (this.state.currentImage <= 0) {
 			return;
 		}
 		this.setState({currentImage: this.state.currentImage - 1});
-		this.updateLightbox();
 	}
 	closeLightbox(evnt) {
-		console.log("closeLightbox");
 		this.setState({lightboxIsOpen: false});
-		this.updateLightbox();
 	}
 	render() {
-		console.log("render(): lightbox=" + this.state.lightbox);
-		return <span>{this.state.lightbox}</span>
+		//	If urlObjs has been initialized, we're good to go . . .
+		if (this.state.urlObjs) {
+			return <Lightbox  
+				images={this.state.urlObjs}
+				isOpen={this.state.lightboxIsOpen} 
+				currentImage={this.state.currentImage}
+				onClickPrev={this.gotoPrevious} 
+				onClickNext={this.gotoNext} 
+				onClickImage={this.handleClick}
+				onClose={this.closeLightbox}
+				preventScroll = {this.state.preventScroll}
+			/>;
+		}
+		//	. . . else we're not
+		return null;
 	}
 }
 
