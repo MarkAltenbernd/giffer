@@ -8,8 +8,8 @@ class Trendings extends Component {
 			 giphyID: props.giphyID
 			,giphyLimit: props.giphyLimit
 			,lightboxIsOpen: true
-			,currentImage: 9
-			,precentScroll: false
+			,currentImage: 0
+			,preventScroll: true
 		};
 		this.handleClick = this.handleClick.bind(this);
 		this.gotoPrevious = this.gotoPrevious.bind(this);
@@ -19,6 +19,7 @@ class Trendings extends Component {
 	}
 	
 	componentDidMount() {	
+		console.log("componentDidMount");
 		let giphyClient = require('giphy-js-sdk-core');
 		let client = giphyClient(this.state.giphyID);
 		
@@ -44,19 +45,11 @@ class Trendings extends Component {
 					let urlObj = {src: urlStr};
 					urlObjs.push(urlObj);
 				}
+				console.log("pre-setState(trendObjs):");
 				this.setState({trendObjs: trendObjs});
+				console.log("pre-setState(urlObjs):");
 				this.setState({urlObjs: urlObjs});
-				/*
-				const lightbox = <Lightbox  
-					images={this.state.urlObjs}
-					isOpen={this.state.lightboxIsOpen} 
-					currentImage={this.state.currentImage}
-					onClickPrev={this.gotoPrevious} 
-					onClickNext={this.gotoNext} 
-					onClickImage={this.handleClick}
-					onClose={this.closeLightbox}
-					preventScroll = {this.state.preventScroll}
-				/>;	//*/
+				console.log("pre-updateLightbox():");
 				this.updateLightbox();
 			})
 			.catch((err) => {
@@ -64,6 +57,7 @@ class Trendings extends Component {
 			})
 	}	//	componentDidMount()
 	updateLightbox() {
+		console.log("updateLightbox");
 		const lightbox = <Lightbox  
 			images={this.state.urlObjs}
 			isOpen={this.state.lightboxIsOpen} 
@@ -77,28 +71,33 @@ class Trendings extends Component {
 		this.setState({lightbox: lightbox});		
 	}
 	handleClick(evnt) {
+		console.log("handleClick");
 		console.log("\thandleClick(evnt) for id=" + evnt.currentTarget.id);
 		this.updateLightbox();
 	}
 	gotoNext(evnt) {
-		if (this.state.currentImage >= this.state.giphyLimit) {
+		console.log("gotoNext");
+		if (this.state.currentImage >= this.state.giphyLimit - 1) {
 			return;
 		}
 		this.setState({currentImage: this.state.currentImage + 1});
 		this.updateLightbox();
 	}
 	gotoPrevious(evnt) {
-		if (this.state.currentImage <= 1) {
+		console.log("gotoPrevious");
+		if (this.state.currentImage <= 0) {
 			return;
 		}
 		this.setState({currentImage: this.state.currentImage - 1});
 		this.updateLightbox();
 	}
 	closeLightbox(evnt) {
+		console.log("closeLightbox");
 		this.setState({lightboxIsOpen: false});
 		this.updateLightbox();
 	}
 	render() {
+		console.log("render(): lightbox=" + this.state.lightbox);
 		return <span>{this.state.lightbox}</span>
 	}
 }
