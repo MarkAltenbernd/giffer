@@ -10,8 +10,10 @@ class Trendings extends Component {
 			,lightboxIsOpen: true
 			,currentImage: 0
 			,preventScroll: true
+			,showThumbnails: true
 		};
-		this.handleClick = this.handleClick.bind(this);
+		this.onClickImage = this.onClickImage.bind(this);
+		this.onClickThumbnail = this.onClickThumbnail.bind(this);
 		this.gotoPrevious = this.gotoPrevious.bind(this);
 		this.gotoNext = this.gotoNext.bind(this);
 		this.closeLightbox = this.closeLightbox.bind(this);
@@ -40,7 +42,7 @@ class Trendings extends Component {
 					
 					//	Following for react-images
 					let urlStr = response.data[i].images.fixed_height_still.gif_url;
-					let urlObj = {src: urlStr, caption: trendObj.title};
+					let urlObj = {src: urlStr, caption: trendObj.title, alt: trendObj.id};
 					urlObjs.push(urlObj);
 				}
 				this.setState({trendObjs: trendObjs});
@@ -50,9 +52,12 @@ class Trendings extends Component {
 				console.log("Trendings.componentDidMount() failed:\n" + err);
 			})
 	}	//	componentDidMount()
-	handleClick(evnt) {
-		console.log("handleClick");
-		console.log("\thandleClick(evnt) for id=" + evnt.currentTarget.id);
+	onClickImage(evnt) {
+		let trendObj = this.state.trendObjs[this.state.currentImage];
+		console.log(this.state.currentImage + ": " + trendObj.title);
+	}
+	onClickThumbnail(idx) {
+		this.setState({currentImage: idx});
 	}
 	gotoNext(evnt) {
 		if (this.state.currentImage >= this.state.giphyLimit - 1) {
@@ -76,9 +81,11 @@ class Trendings extends Component {
 				images={this.state.urlObjs}
 				isOpen={this.state.lightboxIsOpen} 
 				currentImage={this.state.currentImage}
+				showThumbnails={this.state.showThumbnails}
 				onClickPrev={this.gotoPrevious} 
 				onClickNext={this.gotoNext} 
-				onClickImage={this.handleClick}
+				onClickImage={this.onClickImage}
+				onClickThumbnail={this.onClickThumbnail}
 				onClose={this.closeLightbox}
 				preventScroll = {this.state.preventScroll}
 			/>;
