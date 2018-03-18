@@ -40,7 +40,7 @@ class Trendings extends Component {
 					
 					//	Following for react-images
 					let urlStr = response.data[i].images.fixed_height_still.gif_url;
-					let urlObj = {src: urlStr};
+					let urlObj = {src: urlStr, caption: trendObj.title};
 					urlObjs.push(urlObj);
 				}
 				this.setState({trendObjs: trendObjs});
