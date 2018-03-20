@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Lightbox from 'react-images';
+import InfoBox from './InfoBox.js'
 
 class Trendings extends Component {
 	constructor(props) {
@@ -7,10 +8,11 @@ class Trendings extends Component {
 		this.state = {
 			 giphyID: props.giphyID
 			,giphyLimit: props.giphyLimit
-			,lightboxIsOpen: true
+			,lightboxIsOpen: false
 			,currentImage: 0
 			,preventScroll: true
 			,showThumbnails: true
+			,infoStr: "### infoStr default ###"
 		};
 		this.onClickImage = this.onClickImage.bind(this);
 		this.onClickThumbnail = this.onClickThumbnail.bind(this);
@@ -27,11 +29,11 @@ class Trendings extends Component {
 		//	Parameters are "limit", "rating", and/or "fmt"
 		client.trending("gifs", {limit: this.state.giphyLimit})	
 			.then((response) => {
-				let trendObjs = [];	//	Array of objects
+				let trendObjs = [];	//	Array of info objects
 				let urlObjs = [];	//	Array of fixed-height still image URLs
 				
-				//	Create objects with just properties we want, then
-				//	push those objects into the trendObjs array
+				//	Create objects with just the properties we want, 
+				//	then push those objects into the trendObjs array
 				for (let i = 0; i < response.data.length; i++) {
 					let trendObj = {};
 					trendObj.id = response.data[i].id;
@@ -40,58 +42,75 @@ class Trendings extends Component {
 					trendObj.image = response.data[i].images.fixed_height_still;
 					trendObjs.push(trendObj); 
 					
-					//	Following for react-images
+					//	Following for react-images carousel component
 					let urlStr = response.data[i].images.fixed_height_still.gif_url;
 					let urlObj = {src: urlStr, caption: trendObj.title, alt: trendObj.id};
 					urlObjs.push(urlObj);
 				}
-				this.setState({trendObjs: trendObjs});
-				this.setState({urlObjs: urlObjs});
+				this.setState({trendObjs : trendObjs});
+				this.setState({urlObjs : urlObjs});
+				this.setState({lightboxIsOpen : true});
 			})
 			.catch((err) => {
 				console.log("Trendings.componentDidMount() failed:\n" + err);
 			})
 	}	//	componentDidMount()
+	
 	onClickImage(evnt) {
+		//	Retrieve info object corresponding to selected image
 		let trendObj = this.state.trendObjs[this.state.currentImage];
-		console.log(this.state.currentImage + ": " + trendObj.title);
+		this.setState({infoStr : trendObj.id + " :: " + trendObj.title});
 	}
+	
 	onClickThumbnail(idx) {
 		this.setState({currentImage: idx});
 	}
+	
 	gotoNext(evnt) {
 		if (this.state.currentImage >= this.state.giphyLimit - 1) {
 			return;
 		}
 		this.setState({currentImage: this.state.currentImage + 1});
 	}
+	
 	gotoPrevious(evnt) {
 		if (this.state.currentImage <= 0) {
 			return;
 		}
 		this.setState({currentImage: this.state.currentImage - 1});
 	}
+	
 	closeLightbox(evnt) {
 		this.setState({lightboxIsOpen: false});
 	}
+	
 	render() {
-		//	If urlObjs has been initialized, we're good to go . . .
-		if (this.state.urlObjs) {
-			return <Lightbox  
-				images={this.state.urlObjs}
-				isOpen={this.state.lightboxIsOpen} 
-				currentImage={this.state.currentImage}
-				showThumbnails={this.state.showThumbnails}
-				onClickPrev={this.gotoPrevious} 
-				onClickNext={this.gotoNext} 
-				onClickImage={this.onClickImage}
-				onClickThumbnail={this.onClickThumbnail}
-				onClose={this.closeLightbox}
-				preventScroll = {this.state.preventScroll}
-			/>;
+		if (this.state.lightboxIsOpen) { 
+			console.log("Trendings.render()\n\tthis.state.infoStr=" + this.state.infoStr);
+			return (
+				<div>
+					<Lightbox  
+						images={this.state.urlObjs}
+						isOpen={this.state.lightboxIsOpen} 
+						currentImage={this.state.currentImage}
+						showThumbnails={this.state.showThumbnails}
+						onClickPrev={this.gotoPrevious} 
+						onClickNext={this.gotoNext} 
+						onClickImage={this.onClickImage}
+						onClickThumbnail={this.onClickThumbnail}
+						onClose={this.closeLightbox}
+						preventScroll = {this.state.preventScroll}
+					/>
+					<InfoBox info={this.state.infoStr} />
+				</div>
+			);
 		}
-		//	. . . else we're not
-		return null;
+		// Return HTML during development; return null in production
+		return (
+			<div>
+				<h3>Lightbox is <em>NOT</em> open!</h3>
+			</div>
+		);
 	}
 }
 
