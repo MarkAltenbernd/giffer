@@ -11,16 +11,16 @@ const giphyID = "Gb1KY3Lqu93pXZoqaAAEGxWjUd0Tos8A";
 //	Number of GIFs to retrieve in one call
 const giphyLimit = 16;
 
-const element = <App />;
-ReactDOM.render(
-	element, 
-	document.getElementById('root')
-);
-
 const giffList = <Trendings giphyID={giphyID} giphyLimit={giphyLimit} />;
 ReactDOM.render(
 	giffList, 
 	document.getElementById('giffList')
+);
+
+const element = <App />;
+ReactDOM.render(
+	element, 
+	document.getElementById('root')
 );
 
 registerServiceWorker();

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Trendings.css';
 import Lightbox from 'react-images';
 import InfoBox from './InfoBox.js'
 
@@ -10,9 +11,10 @@ class Trendings extends Component {
 			,giphyLimit: props.giphyLimit
 			,lightboxIsOpen: false
 			,currentImage: 0
-			,preventScroll: true
+			,preventScroll: false
 			,showThumbnails: true
-			,infoStr: "### infoStr default ###"
+			,infoStr: ""
+			,zIndex: "321"
 		};
 		this.onClickImage = this.onClickImage.bind(this);
 		this.onClickThumbnail = this.onClickThumbnail.bind(this);
@@ -86,7 +88,6 @@ class Trendings extends Component {
 	
 	render() {
 		if (this.state.lightboxIsOpen) { 
-			console.log("Trendings.render()\n\tthis.state.infoStr=" + this.state.infoStr);
 			return (
 				<div>
 					<Lightbox  
@@ -94,23 +95,19 @@ class Trendings extends Component {
 						isOpen={this.state.lightboxIsOpen} 
 						currentImage={this.state.currentImage}
 						showThumbnails={this.state.showThumbnails}
+						preventScroll = {this.state.preventScroll}
 						onClickPrev={this.gotoPrevious} 
 						onClickNext={this.gotoNext} 
 						onClickImage={this.onClickImage}
 						onClickThumbnail={this.onClickThumbnail}
 						onClose={this.closeLightbox}
-						preventScroll = {this.state.preventScroll}
-					/>
+					>
+					</Lightbox>
 					<InfoBox info={this.state.infoStr} />
 				</div>
 			);
 		}
-		// Return HTML during development; return null in production
-		return (
-			<div>
-				<h3>Lightbox is <em>NOT</em> open!</h3>
-			</div>
-		);
+		return null;
 	}
 }
 

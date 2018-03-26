@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-	const rev = "34";		//	Revision version - NOT mapped to git commits
+	const rev = "39";		//	Revision version - NOT mapped to git commits
 	if (!rev) return null;  
     return (
 		<div className="App">
