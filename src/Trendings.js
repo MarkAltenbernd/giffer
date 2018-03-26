@@ -10,17 +10,18 @@ class Trendings extends Component {
 			 giphyID: props.giphyID
 			,giphyLimit: props.giphyLimit
 			,lightboxIsOpen: false
+			,infoboxIsOpen: false
 			,currentImage: 0
 			,preventScroll: false
 			,showThumbnails: true
 			,infoStr: ""
-			,zIndex: "321"
 		};
 		this.onClickImage = this.onClickImage.bind(this);
 		this.onClickThumbnail = this.onClickThumbnail.bind(this);
 		this.gotoPrevious = this.gotoPrevious.bind(this);
 		this.gotoNext = this.gotoNext.bind(this);
 		this.closeLightbox = this.closeLightbox.bind(this);
+		this.closeInfobox = this.closeInfobox.bind(this);
 	}
 	
 	componentDidMount() {	
@@ -62,6 +63,7 @@ class Trendings extends Component {
 		//	Retrieve info object corresponding to selected image
 		let trendObj = this.state.trendObjs[this.state.currentImage];
 		this.setState({infoStr : trendObj.id + " :: " + trendObj.title});
+		this.setState({infoboxIsOpen: true});
 	}
 	
 	onClickThumbnail(idx) {
@@ -83,10 +85,22 @@ class Trendings extends Component {
 	}
 	
 	closeLightbox(evnt) {
+		this.setState({infoboxIsOpen: false});
+		this.setState({infoStr: null});
 		this.setState({lightboxIsOpen: false});
+	}
+	closeInfobox() {
+		this.setState({infoboxIsOpen: false});
+		this.setState({infoStr: null});
 	}
 	
 	render() {
+		//If infobox is open, always show it . . . 
+		if (this.state.infoboxIsOpen) {
+				return <InfoBox info={this.state.infoStr} closeInfobox={this.closeInfobox} />
+		}
+		//	. . . but if infoxbox is closed and lightboxIsOpen,
+		//	show the lightbox . . .
 		if (this.state.lightboxIsOpen) { 
 			return (
 				<div>
@@ -103,10 +117,10 @@ class Trendings extends Component {
 						onClose={this.closeLightbox}
 					>
 					</Lightbox>
-					<InfoBox info={this.state.infoStr} />
 				</div>
 			);
 		}
+		//	. . . but if neither is open, show nothing
 		return null;
 	}
 }

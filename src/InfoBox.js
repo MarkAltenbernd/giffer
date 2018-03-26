@@ -5,6 +5,10 @@ class InfoBox extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {info: this.props.info}
+		this.handleClick = this.handleClick.bind(this);
+	}
+	handleClick() {
+		this.props.closeInfobox();
 	}
 	render() {
 		let locStr = this.props.info;
@@ -12,7 +16,7 @@ class InfoBox extends Component {
 			return (
 				<div className='info'>
 					<h4>{locStr}</h4>
-					<p><button>Close</button></p>
+					<button onClick={this.handleClick}>Close</button>
 				</div>
 			)
 		}

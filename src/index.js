@@ -17,10 +17,11 @@ ReactDOM.render(
 	document.getElementById('giffList')
 );
 
+//*
 const element = <App />;
 ReactDOM.render(
 	element, 
 	document.getElementById('root')
-);
+);	//*/
 
 registerServiceWorker();
