@@ -42,11 +42,11 @@ class Trendings extends Component {
 					trendObj.id = response.data[i].id;
 					trendObj.url = response.data[i].url;
 					trendObj.title = response.data[i].title;
-					trendObj.image = response.data[i].images.fixed_height_still;
+					trendObj.image = response.data[i].images.fixed_height;
 					trendObjs.push(trendObj); 
 					
 					//	Following for react-images carousel component
-					let urlStr = response.data[i].images.fixed_height_still.gif_url;
+					let urlStr = response.data[i].images.fixed_height.gif_url;
 					let urlObj = {src: urlStr, caption: trendObj.title, alt: trendObj.id};
 					urlObjs.push(urlObj);
 				}
