@@ -62,18 +62,13 @@ class Trendings extends Component {
 		//	Retrieve info object corresponding to selected image
 		let trendObj = this.state.trendObjs[this.state.currentImage];
 		let infoObj = {};
-		let infoObjs = [];
 		infoObj.id = trendObj.id;
 		infoObj.title = trendObj.title;
 		infoObj.width = trendObj.image.width;
 		infoObj.height = trendObj.image.height;
 		infoObj.size = trendObj.image.gif_size;
 		infoObj.mediaID = trendObj.image.media_id;
-		infoObjs.push(infoObj);
-		console.log("onClickImage():\n\tinfoObjs=" + infoObjs);
-		this.setState({infoObjs : infoObjs});
 		this.setState({infoObj : infoObj});
-		console.log("\tthis.state.ingoObj=" + this.state.infoObj + "this.state.infoObjs=" + this.state.infoObjs);
 		this.setState({infoboxIsOpen: true});
 	}
 	
@@ -107,7 +102,6 @@ class Trendings extends Component {
 	
 	render() {
 		//If infobox is open, always show it . . . 
-		console.log("Trendings.render():\n\tinfoboxIsOpen=" + this.state.infoboxIsOpen + "; infoObj=" + this.state.infoObj + "infoObjs=" + this.state.infoObjs);
 		if (this.state.infoboxIsOpen) { 
 			return <InfoBox infoObj={this.state.infoObj} closeInfobox={this.closeInfobox} />
 		}

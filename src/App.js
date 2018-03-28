@@ -5,7 +5,7 @@ import './App.css';
 class App extends Component {
   render() {
 	var rev = null;	//	Do not show logo
-	rev = "44";		//	Revision  - remove for production	
+	rev = "45";		//	Revision  - remove for production	
 	if (!rev) return null;  
     return (
 		<div className="App">
