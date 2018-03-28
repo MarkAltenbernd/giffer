@@ -1,7 +1,20 @@
 /*	InfoBox.css
 	Initially just a placeholder file
 */
-.info {
+.infoBox {
 	position: relative;
-	zIndex: 2002;
+	margin: 10px;
+	border-style: solid;
+	border-width: 4px;
+	border-color: #330099;
+	border-radius: 8px;
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+.ibTitle {
+	color: #330099;
+}
+.ibItem {
+	font-size: 0.8em;
 }

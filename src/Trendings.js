@@ -120,8 +120,7 @@ class Trendings extends Component {
 						onClickNext={this.gotoNext} 
 						onClickImage={this.onClickImage}
 						onClickThumbnail={this.onClickThumbnail}
-						onClose={this.closeLightbox}
-					>
+						onClose={this.closeLightbox}>
 					</Lightbox>
 				</div>
 			);
