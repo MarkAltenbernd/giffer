@@ -14,7 +14,6 @@ class Trendings extends Component {
 			,currentImage: 0
 			,preventScroll: false
 			,showThumbnails: true
-			,infoStr: ""
 		};
 		this.onClickImage = this.onClickImage.bind(this);
 		this.onClickThumbnail = this.onClickThumbnail.bind(this);
@@ -49,7 +48,7 @@ class Trendings extends Component {
 					let urlStr = response.data[i].images.fixed_height.gif_url;
 					let urlObj = {src: urlStr, caption: trendObj.title, alt: trendObj.id};
 					urlObjs.push(urlObj);
-				}
+				}                                                
 				this.setState({trendObjs : trendObjs});
 				this.setState({urlObjs : urlObjs});
 				this.setState({lightboxIsOpen : true});
@@ -62,7 +61,19 @@ class Trendings extends Component {
 	onClickImage(evnt) {
 		//	Retrieve info object corresponding to selected image
 		let trendObj = this.state.trendObjs[this.state.currentImage];
-		this.setState({infoStr : trendObj.id + " :: " + trendObj.title});
+		let infoObj = {};
+		let infoObjs = [];
+		infoObj.id = trendObj.id;
+		infoObj.title = trendObj.title;
+		infoObj.width = trendObj.image.width;
+		infoObj.height = trendObj.image.height;
+		infoObj.size = trendObj.image.gif_size;
+		infoObj.mediaID = trendObj.image.media_id;
+		infoObjs.push(infoObj);
+		console.log("onClickImage():\n\tinfoObjs=" + infoObjs);
+		this.setState({infoObjs : infoObjs});
+		this.setState({infoObj : infoObj});
+		console.log("\tthis.state.ingoObj=" + this.state.infoObj + "this.state.infoObjs=" + this.state.infoObjs);
 		this.setState({infoboxIsOpen: true});
 	}
 	
@@ -86,18 +97,19 @@ class Trendings extends Component {
 	
 	closeLightbox(evnt) {
 		this.setState({infoboxIsOpen: false});
-		this.setState({infoStr: null});
+		this.setState({infoObj: null});
 		this.setState({lightboxIsOpen: false});
 	}
 	closeInfobox() {
 		this.setState({infoboxIsOpen: false});
-		this.setState({infoStr: null});
+		this.setState({infoObj: null});
 	}
 	
 	render() {
 		//If infobox is open, always show it . . . 
-		if (this.state.infoboxIsOpen) {
-				return <InfoBox info={this.state.infoStr} closeInfobox={this.closeInfobox} />
+		console.log("Trendings.render():\n\tinfoboxIsOpen=" + this.state.infoboxIsOpen + "; infoObj=" + this.state.infoObj + "infoObjs=" + this.state.infoObjs);
+		if (this.state.infoboxIsOpen) { 
+			return <InfoBox infoObj={this.state.infoObj} closeInfobox={this.closeInfobox} />
 		}
 		//	. . . but if infoxbox is closed and lightboxIsOpen,
 		//	show the lightbox . . .

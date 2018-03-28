@@ -4,19 +4,21 @@ import './InfoBox.css';
 class InfoBox extends Component {
 	constructor (props) {
 		super(props);
-		this.state = {info: this.props.info}
 		this.handleClick = this.handleClick.bind(this);
 	}
 	handleClick() {
 		this.props.closeInfobox();
 	}
 	render() {
-		let locStr = this.props.info;
-		if (locStr) {
+		if (this.props.infoObj) {
 			return (
-				<div className='info'>
-					<h4>{locStr}</h4>
-					<button onClick={this.handleClick}>Close</button>
+				<div className='infoBox'>
+					<h4 className='ibTitle'>{this.props.infoObj.title}</h4>
+					<span className='ibItem'>Width:{this.props.infoObj.width} Height:{this.props.infoObj.height}</span><br />
+					<span className='ibItem'>Size: {this.props.infoObj.size}</span><br/ >
+					<span className='ibItem'>GIF ID: {this.props.infoObj.id}</span><br/ >
+					<span className='ibItem'>Media ID: {this.props.infoObj.mediaID}</span>
+					<p><button onClick={this.handleClick}>Close</button></p>
 				</div>
 			)
 		}
